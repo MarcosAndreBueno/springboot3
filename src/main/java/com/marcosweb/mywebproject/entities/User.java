@@ -2,9 +2,20 @@ package com.marcosweb.mywebproject.entities;
 
 import java.io.Serializable;
 
+//Usaremos sempre a especificação persistence ao invés da implementação (org.hibernate.anotations.Entity)
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "tb_user") //renomear tabela pois User é palavra reservada do H2
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY) //autoincrement
 	private Long id;
 	private String name;
 	private String email;
