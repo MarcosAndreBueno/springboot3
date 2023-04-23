@@ -24,7 +24,7 @@ public class Product implements Serializable {
 	private Double price;
 	private String imgUrl;
 
-	//Usou Set ao invés do List, pois Set representa conjunto, ou seja, evita um produto ter mais de uma categoria
+	//Usou Set ao invés do List, pois Set representa conjunto, ou seja, evita um produto ter uma mesma categoria mais de uma vez
 	//Por padrão, não se usa setters em Set, apenas getters, pois uma coleção nunca é trocada, no máximo adiciona-se ou remove-se elementos dela.
 	//transient é uma anotação temporária que será corrigida na outra aula, evita o jpa de tentar interpetar este atributo.
 	@Transient
