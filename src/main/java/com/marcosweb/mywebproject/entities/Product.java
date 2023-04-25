@@ -8,8 +8,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "tb_product")
@@ -26,8 +28,9 @@ public class Product implements Serializable {
 
 	//Usou Set ao invés do List, pois Set representa conjunto, ou seja, evita um produto ter uma mesma categoria mais de uma vez
 	//Por padrão, não se usa setters em Set, apenas getters, pois uma coleção nunca é trocada, no máximo adiciona-se ou remove-se elementos dela.
-	//transient é uma anotação temporária que será corrigida na outra aula, evita o jpa de tentar interpetar este atributo.
-	@Transient
+	//product_id e category_id: são chaves estrangeiras
+	@ManyToMany
+	@JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private Set<Category> categories = new HashSet<>();
 
 	public Product() {
