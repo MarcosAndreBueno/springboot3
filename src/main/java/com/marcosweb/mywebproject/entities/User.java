@@ -29,8 +29,8 @@ public class User implements Serializable {
 
 	//relacionamento entre tabelas, mapeado pelo atributo client (na classe Order)
 	//JsonIgnore para evitar loop entre classe User e Order
-	//"lazy loading" do JPA: Order e User tem relação * para ¹, se chamar Order retornará todos dados, quando chamar User retornará dados apenas do cliente. 
-	//Contudo, a API Jackson dá preferência para a classe usando "JsonIgnore", logo quando chamar Order retornará apenas pedidos, quando chamar User retornará tudo.
+	//"lazy loading" do JPA: Order e User tem relação * para ¹, se chamar Order apenas order, quando chamar User retornará order e user. 
+	//Contudo, a API Jackson dá preferência para a classe usando "JsonIgnore", logo quando chamar Order orders e users, enquanto User retornará apenas users.
 	@JsonIgnore
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();

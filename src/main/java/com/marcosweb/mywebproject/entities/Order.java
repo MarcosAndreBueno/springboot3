@@ -2,6 +2,8 @@ package com.marcosweb.mywebproject.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.marcosweb.mywebproject.entities.enums.OrderStatus;
 
@@ -11,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 //anotation entity transforma essa classe em tabela.
@@ -33,6 +36,11 @@ public class Order implements Serializable {
 	@JoinColumn(name = "client_id")
 	private User client;
 
+	//esta classe será responsável por acessar o OrderItem, por isso "id"
+	//por fim, classe OrderItem, por possuir chave primária composta, precisará acessar a classe OrderItemPK para que o JPA a interprete como tal, por isso ".order"
+	@OneToMany(mappedBy = "id.order")
+	private Set<OrderItem> items = new HashSet<>();
+	
 	public Order() {
 	}
 
@@ -78,6 +86,10 @@ public class Order implements Serializable {
 		}
 	}
 
+	public Set<OrderItem> getItems() {
+		return items;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
