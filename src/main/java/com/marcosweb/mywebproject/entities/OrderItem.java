@@ -21,7 +21,7 @@ public class OrderItem implements Serializable {
 
 	private Integer quantity;
 	private Double price;
-
+	
 	public OrderItem() {
 	}
 
