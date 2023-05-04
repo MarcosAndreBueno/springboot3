@@ -1,16 +1,20 @@
 package com.marcosweb.mywebproject.resources;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.marcosweb.mywebproject.entities.User;
-import com.marcosweb.mywebproject.services.UserService;
-import org.springframework.web.bind.annotation.PathVariable;
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import com.marcosweb.mywebproject.entities.User;
+import com.marcosweb.mywebproject.services.UserService;
 
 //classe da camada controladora (lembrando que a aplicação ta dividida em: front/controladores/serviços/banco de dados)
 @RestController
@@ -35,5 +39,16 @@ public class UserResource {
 	public ResponseEntity<User> findById(@PathVariable Long id) {
 		User obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
+	}
+	
+	//PostMapping é um método do http para inserção de dados
+	//RequestBody explicita que o objeto será enviado como Json na requisição e será desserializado em objeto User no Java
+	@PostMapping
+	public ResponseEntity<User> insert(@RequestBody User obj) {
+		obj = service.insert(obj);
+		//retorna confirmação 201 do http de novo recurso criado (assim é mais correto do que apenas deixar igual os returns dos métodos acima)
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).body(obj);
 	}
 }
