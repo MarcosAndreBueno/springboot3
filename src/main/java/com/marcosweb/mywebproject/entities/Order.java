@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.marcosweb.mywebproject.entities.enums.OrderStatus;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 //anotation entity transforma essa classe em tabela.
@@ -40,6 +42,10 @@ public class Order implements Serializable {
 	//por fim, classe OrderItem, por possuir chave primária composta, precisará acessar a classe OrderItemPK para que o JPA a interprete como tal, por isso ".order"
 	@OneToMany(mappedBy = "id.order")
 	private Set<OrderItem> items = new HashSet<>();
+	
+	//cascade: obrigatório sempre que as duas classes estiverem em relação OneToOne e forem ter o mesmo código id na tabela do BD.
+	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+	private Payment payment;
 	
 	public Order() {
 	}
@@ -88,6 +94,14 @@ public class Order implements Serializable {
 
 	public Set<OrderItem> getItems() {
 		return items;
+	}
+	
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
 	}
 	
 	@Override
