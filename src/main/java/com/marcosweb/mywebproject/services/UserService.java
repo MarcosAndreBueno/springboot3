@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.marcosweb.mywebproject.entities.User;
 import com.marcosweb.mywebproject.repositories.UserRepository;
+import com.marcosweb.mywebproject.services.exceptions.ResourceNotFoundException;
 
 //classe da camada de serviço (lembrando que a aplicação ta dividida em: front/controladores/serviços/banco de dados)
 //se não registrar a classe com uma anotation, então o spring não conseguirá autoinjetar a dependência nas classes que a usam.
@@ -24,7 +25,7 @@ public class UserService {
 
 	public User findById(Long id) { 
 		Optional<User> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	//por padrão o save já retorna o objeto salvo
