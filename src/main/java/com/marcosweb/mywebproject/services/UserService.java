@@ -35,4 +35,17 @@ public class UserService {
 	public void delete(Long id) {
 		repository.deleteById(id);
 	}
+	
+	//o método referenceById é mais eficiente que o findById, pois não trás o objeto, mas o deixa preparado para quando precisarmos executar a operação no BD
+	public User update(Long id, User obj) {
+		User entity = repository.getReferenceById(id);
+		updateData(entity, obj);
+		return repository.save(entity);
+	}
+
+	private void updateData(User entity, User obj) {
+		entity.setName(obj.getName());
+		entity.setEmail(obj.getEmail());
+		entity.setPhone(obj.getPhone());
+	}
 }
