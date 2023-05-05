@@ -13,6 +13,8 @@ import com.marcosweb.mywebproject.repositories.UserRepository;
 import com.marcosweb.mywebproject.services.exceptions.DatabaseException;
 import com.marcosweb.mywebproject.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 //classe da camada de serviço (lembrando que a aplicação ta dividida em: front/controladores/serviços/banco de dados)
 //se não registrar a classe com uma anotation, então o spring não conseguirá autoinjetar a dependência nas classes que a usam.
 @Service
@@ -48,9 +50,13 @@ public class UserService {
 	
 	//o método referenceById é mais eficiente que o findById, pois não trás o objeto, mas o deixa preparado para quando precisarmos executar a operação no BD
 	public User update(Long id, User obj) {
-		User entity = repository.getReferenceById(id);
-		updateData(entity, obj);
-		return repository.save(entity);
+		try {
+			User entity = repository.getReferenceById(id);
+			updateData(entity, obj);
+			return repository.save(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	private void updateData(User entity, User obj) {
