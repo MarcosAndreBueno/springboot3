@@ -32,7 +32,6 @@ Este projeto faz parte do curso de Java de Nélio Alves pela Udemy. Contempla um
 - Maven
 
 ## Implantação em produção
-- Back end: Heroku
 - Banco de dados: H2
 
 ## Teste API REST
