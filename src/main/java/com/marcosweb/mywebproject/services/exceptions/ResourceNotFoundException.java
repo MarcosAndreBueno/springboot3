@@ -1,5 +1,6 @@
 package com.marcosweb.mywebproject.services.exceptions;
 
+//para tratar exceções específicas do spring data
 public class ResourceNotFoundException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
