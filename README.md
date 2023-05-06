@@ -30,8 +30,6 @@ Este projeto faz parte do curso de Java de Nélio Alves pela Udemy. Contempla um
 - Spring Boot
 - JPA / Hibernate
 - Maven
-
-## Implantação em produção
 - Banco de dados: H2
 
 ## Teste API REST
